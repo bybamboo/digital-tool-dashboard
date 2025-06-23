@@ -53,13 +53,6 @@ const Auth = () => {
           </p>
         </CardHeader>
         <CardContent>
-          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <h4 className="text-sm font-medium text-blue-800 mb-2">Credenciales de acceso:</h4>
-            <p className="text-sm text-blue-700">
-              <strong>Email:</strong> soy@sandrabamboo.com<br />
-              <strong>Contraseña:</strong> changeme
-            </p>
-          </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
