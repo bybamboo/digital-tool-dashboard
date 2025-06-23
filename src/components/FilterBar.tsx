@@ -65,14 +65,14 @@ const FilterBar: React.FC<FilterBarProps> = ({
           </div>
 
           <Select
-            value={filters.category}
-            onValueChange={(value) => onFiltersChange({ ...filters, category: value })}
+            value={filters.category || "all"}
+            onValueChange={(value) => onFiltersChange({ ...filters, category: value === "all" ? "" : value })}
           >
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="All categories" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All categories</SelectItem>
+              <SelectItem value="all">All categories</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
