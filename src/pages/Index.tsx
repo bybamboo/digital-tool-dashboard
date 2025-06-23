@@ -55,7 +55,7 @@ const Index = () => {
   };
 
   const handleDeleteTool = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this tool?')) {
+    if (window.confirm('¿Estás seguro de que quieres eliminar esta herramienta?')) {
       deleteTool(id);
     }
   };
@@ -65,7 +65,7 @@ const Index = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your tools...</p>
+          <p className="text-gray-600">Cargando tus herramientas...</p>
         </div>
       </div>
     );
@@ -77,9 +77,16 @@ const Index = () => {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Digital Toolkit Manager</h1>
-              <p className="text-sm text-gray-600">Organize and manage all your digital tools</p>
+            <div className="flex items-center gap-3">
+              <img 
+                src="/lovable-uploads/0dc5cbfd-6ab5-4377-bbf6-25f270015455.png" 
+                alt="Toolkit Manager Logo" 
+                className="h-8 w-8"
+              />
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Toolkit Manager</h1>
+                <p className="text-sm text-gray-600">Organiza y gestiona todas tus herramientas digitales</p>
+              </div>
             </div>
             
             <div className="flex items-center gap-3">
@@ -88,7 +95,7 @@ const Index = () => {
                 className="flex items-center gap-2"
               >
                 <Plus className="h-4 w-4" />
-                Add Tool
+                Agregar Herramienta
               </Button>
             </div>
           </div>
@@ -116,18 +123,18 @@ const Index = () => {
                 <Settings className="h-12 w-12 text-gray-400" />
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                {tools.length === 0 ? 'No tools yet' : 'No tools match your filters'}
+                {tools.length === 0 ? 'No hay herramientas aún' : 'No hay herramientas que coincidan con tus filtros'}
               </h3>
               <p className="text-gray-600 mb-6">
                 {tools.length === 0 
-                  ? 'Get started by adding your first digital tool to the collection.'
-                  : 'Try adjusting your search or filter criteria to find what you\'re looking for.'
+                  ? 'Comienza agregando tu primera herramienta digital a la colección.'
+                  : 'Intenta ajustar tus criterios de búsqueda o filtro para encontrar lo que buscas.'
                 }
               </p>
               {tools.length === 0 && (
                 <Button onClick={handleAddTool} className="flex items-center gap-2">
                   <Plus className="h-4 w-4" />
-                  Add Your First Tool
+                  Agregar Tu Primera Herramienta
                 </Button>
               )}
             </div>

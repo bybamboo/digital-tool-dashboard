@@ -57,7 +57,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
-              placeholder="Search tools..."
+              placeholder="Buscar herramientas..."
               value={filters.search}
               onChange={(e) => onFiltersChange({ ...filters, search: e.target.value })}
               className="pl-10"
@@ -69,10 +69,10 @@ const FilterBar: React.FC<FilterBarProps> = ({
             onValueChange={(value) => onFiltersChange({ ...filters, category: value === "all" ? "" : value })}
           >
             <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="All categories" />
+              <SelectValue placeholder="Todas las categorías" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All categories</SelectItem>
+              <SelectItem value="all">Todas las categorías</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
@@ -90,7 +90,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             }}
           >
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Add tag filter" />
+              <SelectValue placeholder="Agregar etiqueta" />
             </SelectTrigger>
             <SelectContent>
               {allTags
@@ -109,7 +109,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             className="flex items-center gap-2"
           >
             <Star className={`h-4 w-4 ${filters.showFavoritesOnly ? 'fill-current' : ''}`} />
-            Favorites
+            Favoritos
           </Button>
         </div>
 
@@ -156,14 +156,14 @@ const FilterBar: React.FC<FilterBarProps> = ({
               onClick={clearFilters}
               className="text-gray-500 hover:text-gray-700"
             >
-              Clear all filters
+              Limpiar filtros
             </Button>
           )}
         </div>
       )}
 
       <div className="text-sm text-gray-500">
-        Showing {totalCount} tool{totalCount !== 1 ? 's' : ''}
+        Mostrando {totalCount} herramienta{totalCount !== 1 ? 's' : ''}
       </div>
     </div>
   );
