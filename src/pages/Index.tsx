@@ -1,15 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Plus, Settings } from 'lucide-react';
+import { Plus, Settings, LogOut } from 'lucide-react';
 import ToolCard from '@/components/ToolCard';
 import ToolTable from '@/components/ToolTable';
 import ToolForm from '@/components/ToolForm';
 import FilterBar from '@/components/FilterBar';
-import { useTools } from '@/hooks/useTools';
+import { useSupabaseTools } from '@/hooks/useSupabaseTools';
+import { useAuth } from '@/contexts/AuthContext';
 import { Tool, ViewMode, FilterState } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
+  const { user, loading: authLoading, signOut } = useAuth();
+  const navigate = useNavigate();
+  
   const {
     tools,
     loading,
@@ -20,7 +25,7 @@ const Index = () => {
     categories,
     allTags,
     filterTools,
-  } = useTools();
+  } = useSupabaseTools();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTool, setEditingTool] = useState<Tool | null>(null);
@@ -31,6 +36,12 @@ const Index = () => {
     tags: [],
     showFavoritesOnly: false,
   });
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth');
+    }
+  }, [user, authLoading, navigate]);
 
   const filteredTools = filterTools(filters);
 
@@ -60,7 +71,12 @@ const Index = () => {
     }
   };
 
-  if (loading) {
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/auth');
+  };
+
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
@@ -69,6 +85,10 @@ const Index = () => {
         </div>
       </div>
     );
+  }
+
+  if (!user) {
+    return null;
   }
 
   return (
@@ -90,12 +110,23 @@ const Index = () => {
             </div>
             
             <div className="flex items-center gap-3">
+              <span className="text-sm text-gray-600">
+                Bienvenido, {user.email}
+              </span>
               <Button
                 onClick={handleAddTool}
                 className="flex items-center gap-2"
               >
                 <Plus className="h-4 w-4" />
                 Agregar Herramienta
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleSignOut}
+                className="flex items-center gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                Cerrar Sesión
               </Button>
             </div>
           </div>
@@ -104,7 +135,6 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters */}
         <FilterBar
           filters={filters}
           onFiltersChange={setFilters}
@@ -115,7 +145,6 @@ const Index = () => {
           totalCount={filteredTools.length}
         />
 
-        {/* Tools Display */}
         <div className="mt-8">
           {filteredTools.length === 0 ? (
             <div className="text-center py-12">
@@ -165,7 +194,6 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Tool Form Modal */}
       <ToolForm
         isOpen={isFormOpen}
         onClose={() => {
