@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('soy@sandrabamboo.com');
+  const [password, setPassword] = useState('changeme');
   const [loading, setLoading] = useState(false);
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
@@ -53,6 +53,14 @@ const Auth = () => {
           </p>
         </CardHeader>
         <CardContent>
+          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <h4 className="text-sm font-medium text-blue-800 mb-2">Credenciales de acceso:</h4>
+            <p className="text-sm text-blue-700">
+              <strong>Email:</strong> soy@sandrabamboo.com<br />
+              <strong>Contraseña:</strong> changeme
+            </p>
+          </div>
+          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -72,6 +80,7 @@ const Auth = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="changeme"
                 required
               />
             </div>

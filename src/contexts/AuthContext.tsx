@@ -16,6 +16,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const ALLOWED_EMAIL = 'soy@sandrabamboo.com';
+const DEFAULT_PASSWORD = 'changeme';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -54,11 +55,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     if (error) {
-      toast({
-        title: "Error al iniciar sesión",
-        description: error.message,
-        variant: "destructive",
-      });
+      // Si el error es que el usuario no existe, sugerir el registro
+      if (error.message.includes('Invalid login credentials')) {
+        toast({
+          title: "Usuario no encontrado",
+          description: `Usa la contraseña por defecto: ${DEFAULT_PASSWORD}`,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error al iniciar sesión",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
 
     return { error };
