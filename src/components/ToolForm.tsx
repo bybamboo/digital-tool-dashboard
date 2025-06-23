@@ -88,7 +88,7 @@ const ToolForm: React.FC<ToolFormProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+     <DialogContent className="max-h-screen overflow-y-auto px-4 py-6 sm:p-8 w-full sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>
             {tool ? 'Edit Tool' : 'Add New Tool'}
