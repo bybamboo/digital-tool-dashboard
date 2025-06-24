@@ -83,24 +83,24 @@ const ToolCard: React.FC<ToolCardProps> = ({
   Ver web
 </Button>
           
-          <div className="flex gap-1">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onEdit(tool)}
-              className="text-gray-600 hover:text-gray-800"
-            >
-              <Edit className="h-3 w-3" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onDelete(tool.id)}
-              className="text-red-600 hover:text-red-700"
-            >
-              <Trash2 className="h-3 w-3" />
-            </Button>
-          </div>
+<div className="flex gap-1">
+  <Button
+    variant="ghost"
+    size="sm"
+    onClick={() => onEdit(tool)}
+    className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
+  >
+    <Edit className="h-3 w-3" />
+  </Button>
+  <Button
+    variant="ghost"
+    size="sm"
+    onClick={() => onDelete(tool.id)}
+    className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+  >
+    <Trash2 className="h-3 w-3" />
+  </Button>
+</div>
         </div>
       </CardContent>
     </Card>
