@@ -9,7 +9,6 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -45,7 +44,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (email: string, password: string) => {
     if (email !== ALLOWED_EMAIL) {
-      return { error: { message: 'Acceso no autorizado. Solo el administrador puede iniciar sesión.' } };
+      const error = { message: 'Acceso no autorizado.' };
+      toast({
+        title: "Error de acceso",
+        description: error.message,
+        variant: "destructive",
+      });
+      return { error };
     }
 
     const { error } = await supabase.auth.signInWithPassword({
@@ -58,37 +63,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         title: "Error al iniciar sesión",
         description: error.message,
         variant: "destructive",
-      });
-    }
-
-    return { error };
-  };
-
-  const signUp = async (email: string, password: string) => {
-    if (email !== ALLOWED_EMAIL) {
-      return { error: { message: 'Acceso no autorizado. Solo el administrador puede registrarse.' } };
-    }
-
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl
-      }
-    });
-
-    if (error) {
-      toast({
-        title: "Error al registrarse",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Registro exitoso",
-        description: "Revisa tu email para confirmar tu cuenta.",
       });
     }
 
@@ -112,7 +86,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       loading,
       signIn,
-      signUp,
       signOut,
     }}>
       {children}

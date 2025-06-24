@@ -88,32 +88,34 @@ const ToolForm: React.FC<ToolFormProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl mx-4 sm:mx-auto">
         <DialogHeader>
-          <DialogTitle>
-            {tool ? 'Edit Tool' : 'Add New Tool'}
+          <DialogTitle className="text-lg sm:text-xl">
+            {tool ? 'Editar Herramienta' : 'Agregar Nueva Herramienta'}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Name *</Label>
+              <Label htmlFor="name" className="text-sm font-medium">Nombre *</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="rounded-lg"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category">Category *</Label>
+              <Label htmlFor="category" className="text-sm font-medium">Categoría *</Label>
               <Input
                 id="category"
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 list="categories"
+                className="rounded-lg"
                 required
               />
               <datalist id="categories">
@@ -125,45 +127,48 @@ const ToolForm: React.FC<ToolFormProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description *</Label>
+            <Label htmlFor="description" className="text-sm font-medium">Descripción *</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={3}
+              className="rounded-lg resize-none"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="website_url">Website URL *</Label>
+            <Label htmlFor="website_url" className="text-sm font-medium">URL del Sitio Web *</Label>
             <Input
               id="website_url"
               type="url"
               value={formData.website_url}
               onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
-              placeholder="https://example.com"
+              placeholder="https://ejemplo.com"
+              className="rounded-lg"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Tags</Label>
+            <Label className="text-sm font-medium">Etiquetas</Label>
             <div className="flex gap-2">
               <Input
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleTagKeyDown}
-                placeholder="Add a tag and press Enter"
+                placeholder="Agrega una etiqueta y presiona Enter"
+                className="rounded-lg flex-1"
               />
-              <Button type="button" onClick={addTag} variant="outline">
-                Add
+              <Button type="button" onClick={addTag} variant="outline" className="rounded-lg px-3 sm:px-4">
+                Agregar
               </Button>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
               {tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="flex items-center gap-1">
-                  {tag}
+                <Badge key={tag} variant="secondary" className="flex items-center gap-1 rounded-lg">
+                  <span className="text-xs sm:text-sm">{tag}</span>
                   <button
                     type="button"
                     onClick={() => removeTag(tag)}
@@ -177,13 +182,14 @@ const ToolForm: React.FC<ToolFormProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="notes">Notes</Label>
+            <Label htmlFor="notes" className="text-sm font-medium">Notas</Label>
             <Textarea
               id="notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               rows={3}
-              placeholder="Optional notes about this tool..."
+              placeholder="Notas opcionales sobre esta herramienta..."
+              className="rounded-lg resize-none"
             />
           </div>
 
@@ -195,15 +201,15 @@ const ToolForm: React.FC<ToolFormProps> = ({
               onChange={(e) => setFormData({ ...formData, is_favorite: e.target.checked })}
               className="rounded"
             />
-            <Label htmlFor="is_favorite">Mark as favorite</Label>
+            <Label htmlFor="is_favorite" className="text-sm">Marcar como favorito</Label>
           </div>
 
-          <div className="flex justify-end space-x-2 pt-4">
-            <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
+          <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2 pt-4">
+            <Button type="button" variant="outline" onClick={onClose} className="rounded-lg">
+              Cancelar
             </Button>
-            <Button type="submit">
-              {tool ? 'Update Tool' : 'Add Tool'}
+            <Button type="submit" className="rounded-lg">
+              {tool ? 'Actualizar Herramienta' : 'Agregar Herramienta'}
             </Button>
           </div>
         </form>

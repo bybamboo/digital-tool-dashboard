@@ -8,11 +8,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('soy@sandrabamboo.com');
+  const [password, setPassword] = useState('changeme');
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,11 +25,7 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        await signIn(email, password);
-      } else {
-        await signUp(email, password);
-      }
+      await signIn(email, password);
     } finally {
       setLoading(false);
     }
@@ -38,7 +33,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md rounded-xl">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <img 
@@ -46,56 +41,45 @@ const Auth = () => {
               alt="Toolkit Manager Logo" 
               className="h-8 w-8"
             />
-            <CardTitle className="text-2xl font-bold">Toolkit Manager</CardTitle>
+            <CardTitle className="text-xl sm:text-2xl font-bold">Toolkit Manager</CardTitle>
           </div>
-          <p className="text-gray-600">
-            {isLogin ? 'Inicia sesión en tu cuenta' : 'Crea una nueva cuenta'}
+          <p className="text-gray-600 text-sm sm:text-base">
+            Inicia sesión en tu cuenta
           </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="soy@sandrabamboo.com"
+                className="rounded-lg"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password" className="text-sm font-medium">Contraseña</Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="rounded-lg"
                 required
               />
             </div>
             <Button 
               type="submit" 
-              className="w-full" 
+              className="w-full rounded-lg" 
               disabled={loading}
             >
-              {loading ? 'Cargando...' : (isLogin ? 'Iniciar Sesión' : 'Registrarse')}
+              {loading ? 'Iniciando...' : 'Iniciar Sesión'}
             </Button>
           </form>
-          
-          <div className="mt-4 text-center">
-            <Button
-              variant="ghost"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-sm"
-            >
-              {isLogin 
-                ? '¿No tienes cuenta? Regístrate' 
-                : '¿Ya tienes cuenta? Inicia sesión'
-              }
-            </Button>
-          </div>
         </CardContent>
       </Card>
     </div>
