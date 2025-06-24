@@ -92,11 +92,11 @@ const ToolTable: React.FC<ToolTableProps> = ({
                       {tag}
                     </Badge>
                   ))}
-                  {tool.tags.length > 2 && (
-                    <Badge variant="outline" className="text-xs rounded-md">
-                      +{tool.tags.length - 2}
-                    </Badge>
-                  )}
+{tool.tags.length > 2 && (
+  <Badge className="text-xs rounded-md bg-white text-gray-800 border border-gray-300">
+    +{tool.tags.length - 2}
+  </Badge>
+)}
                 </div>
               </TableCell>
               
