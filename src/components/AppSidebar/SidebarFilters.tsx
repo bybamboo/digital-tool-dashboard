@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react'; // AÑADIDO AQUÍ 👈
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { Badge } from '@/components/ui/badge';
-import { FolderOpen, Tag } from 'lucide-react';
+import { FolderOpen } from 'lucide-react';
 import { FilterState } from '@/types';
 
 interface SidebarFiltersProps {
@@ -30,6 +30,8 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
   onFiltersChange,
   toolCounts,
 }) => {
+  const [showAllCategories, setShowAllCategories] = useState(false); // AÑADIDO CORRECTAMENTE
+
   return (
     <>
       {/* Categorías */}
@@ -37,14 +39,16 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
         <SidebarGroupLabel className="text-sidebar-foreground">Categorías</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            {categories.map((category) => (
+            {(showAllCategories ? categories : categories.slice(0, 7)).map((category) => (
               <SidebarMenuItem key={category}>
                 <SidebarMenuButton
-                  onClick={() => onFiltersChange({ 
-                    ...filters, 
-                    category: filters.category === category ? '' : category,
-                    showFavoritesOnly: false 
-                  })}
+                  onClick={() =>
+                    onFiltersChange({
+                      ...filters,
+                      category: filters.category === category ? '' : category,
+                      showFavoritesOnly: false,
+                    })
+                  }
                   isActive={filters.category === category}
                   className="rounded-xl text-sidebar-foreground"
                 >
@@ -56,35 +60,19 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
 
-      {/* Etiquetas populares */}
-      <SidebarGroup>
-        <SidebarGroupLabel className="text-sidebar-foreground">Etiquetas</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <SidebarMenu>
-            {allTags.slice(0, 8).map((tag) => (
-              <SidebarMenuItem key={tag}>
+            {/* Ver más / Ver menos */}
+            {categories.length > 7 && (
+              <SidebarMenuItem>
                 <SidebarMenuButton
-                  onClick={() => {
-                    const newTags = filters.tags.includes(tag)
-                      ? filters.tags.filter(t => t !== tag)
-                      : [...filters.tags, tag];
-                    onFiltersChange({ ...filters, tags: newTags });
-                  }}
-                  isActive={filters.tags.includes(tag)}
-                  className="rounded-xl text-sidebar-foreground"
+                  onClick={() => setShowAllCategories(!showAllCategories)}
+                  isActive={false}
+                  className="rounded-xl text-sidebar-foreground text-sm"
                 >
-                  <Tag className="h-4 w-4" />
-                  <span className="truncate">{tag}</span>
-                  <Badge variant="secondary" className="ml-auto rounded-lg text-xs">
-                    {toolCounts.byTag[tag] || 0}
-                  </Badge>
+                  {showAllCategories ? 'Ver menos' : 'Ver más'}
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            ))}
+            )}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
