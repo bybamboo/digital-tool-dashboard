@@ -40,6 +40,7 @@ const Index = () => {
     tags: [],
     showFavoritesOnly: false,
   });
+  const [sortBy, setSortBy] = useState<'recent' | 'az' | 'za'>('recent');
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -48,6 +49,16 @@ const Index = () => {
   }, [user, authLoading, navigate]);
 
   const filteredTools = filterTools(filters);
+  const sortedTools = useMemo(() => {
+  return [...filteredTools].sort((a, b) => {
+    if (sortBy === 'az') return a.name.localeCompare(b.name);
+    if (sortBy === 'za') return b.name.localeCompare(a.name);
+    if (sortBy === 'recent') {
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    }
+    return 0;
+  });
+}, [filteredTools, sortBy]);
 
   // Calcular estadísticas para la barra lateral
   const toolCounts = useMemo(() => {
@@ -149,7 +160,7 @@ const Index = () => {
       case 'category':
         return (
           <CategoryView
-            tools={filteredTools}
+            tools={sortedTools}
             onEdit={handleEditTool}
             onDelete={handleDeleteTool}
             onToggleFavorite={toggleFavorite}
@@ -159,7 +170,7 @@ const Index = () => {
         return (
           <div className="overflow-x-auto">
             <ToolTable
-              tools={filteredTools}
+              tools={sortedTools}
               onEdit={handleEditTool}
               onDelete={handleDeleteTool}
               onToggleFavorite={toggleFavorite}
@@ -169,7 +180,7 @@ const Index = () => {
       default:
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
-            {filteredTools.map((tool) => (
+            {sortedTools.map((tool) => (
               <ToolCard
                 key={tool.id}
                 tool={tool}
@@ -213,6 +224,8 @@ const Index = () => {
                     viewMode={viewMode}
                     onViewModeChange={setViewMode}
                     totalCount={filteredTools.length}
+                    sortBy={sortBy}
+                    onSortByChange={setSortBy}
                   />
                 </div>
                 
