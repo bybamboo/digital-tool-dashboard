@@ -94,6 +94,30 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Fix for text visibility issues */
+  .text-white {
+    color: white !important;
+  }
+  
+  .text-black {
+    color: black !important;
+  }
+  
+  /* Ensure proper contrast */
+  button {
+    @apply text-foreground;
+  }
+  
+  input {
+    @apply text-foreground bg-background;
+  }
+  
+  /* Fix sidebar text visibility */
+  [data-sidebar] {
+    @apply text-sidebar-foreground;
   }
 }
 
