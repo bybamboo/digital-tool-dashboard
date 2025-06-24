@@ -59,7 +59,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
                 </Button>
               </TableCell>
               
-              <TableCell className="font-medium">
+              <TableCell className="font-medium text-gray-800">
                 <div className="flex items-center gap-2">
                   <span className="truncate max-w-[120px] sm:max-w-none">{tool.name}</span>
                   <Button
@@ -112,7 +112,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => onEdit(tool)}
-                    className="text-gray-600 hover:text-gray-800 p-1 h-auto"
+                    className="text-gray-600 hover:text-gray-800 p-1 h-auto hover:bg-transparent"
                   >
                     <Edit className="h-3 w-3" />
                   </Button>
@@ -122,7 +122,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
                     onClick={() => onDelete(tool.id)}
                     className="text-red-600 hover:text-red-700 p-1 h-auto"
                   >
-                    <Trash2 className="h-3 w-3" />
+                    <Trash2 className="h-3 w-3 text-red-600 hover:text-red-700 transition-colors hover:bg-transparent" />
                   </Button>
                 </div>
               </TableCell>
