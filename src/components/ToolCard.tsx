@@ -55,7 +55,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         
         <div className="flex flex-wrap gap-1 mb-4">
           {tool.tags.slice(0, 3).map((tag) => (
-            <Badge key={tag} variant="outline" className="text-xs">
+            <Badge key={tag} className="text-xs bg-white text-gray-800 border border-gray-300">
               {tag}
             </Badge>
           ))}
