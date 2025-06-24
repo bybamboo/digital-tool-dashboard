@@ -88,17 +88,17 @@ const ToolCard: React.FC<ToolCardProps> = ({
     variant="ghost"
     size="sm"
     onClick={() => onEdit(tool)}
-    className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"
+    className="hover:bg-transparent"
   >
-    <Edit className="h-3 w-3" />
+    <Edit className="h-3 w-3 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-colors" />
   </Button>
   <Button
     variant="ghost"
     size="sm"
     onClick={() => onDelete(tool.id)}
-    className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+    className="hover:bg-transparent"
   >
-    <Trash2 className="h-3 w-3" />
+    <Trash2 className="h-3 w-3 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors" />
   </Button>
 </div>
         </div>
