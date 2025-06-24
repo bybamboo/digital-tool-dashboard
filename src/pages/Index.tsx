@@ -138,7 +138,7 @@ const Index = () => {
           </p>
           {tools.length === 0 && (
             <Button onClick={handleAddTool} className="rounded-xl">
-              Agregar Tu Primera Herramienta
+              Nueva herramienta
             </Button>
           )}
         </div>
