@@ -168,7 +168,7 @@ const Index = () => {
         );
       default:
         return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
             {filteredTools.map((tool) => (
               <ToolCard
                 key={tool.id}
@@ -198,13 +198,13 @@ const Index = () => {
             toolCounts={toolCounts}
           />
           
-          <SidebarInset className="flex-1">
-            {/* Header */}
-            <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 sticky top-0 z-40">
-              <div className="flex h-14 items-center gap-4 px-6">
-                <SidebarTrigger className="rounded-xl" />
+          <SidebarInset className="flex-1 flex flex-col min-w-0">
+            {/* Header con mejor responsive */}
+            <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 sticky top-0 z-40 shrink-0">
+              <div className="flex h-auto min-h-[56px] items-center gap-4 p-4 lg:px-6">
+                <SidebarTrigger className="rounded-xl shrink-0" />
                 
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <FilterBar
                     filters={filters}
                     onFiltersChange={setFilters}
@@ -219,7 +219,7 @@ const Index = () => {
                 <Button
                   variant="ghost"
                   onClick={handleSignOut}
-                  className="rounded-xl"
+                  className="rounded-xl shrink-0"
                   size="sm"
                 >
                   <LogOut className="h-4 w-4" />
@@ -227,9 +227,11 @@ const Index = () => {
               </div>
             </header>
 
-            {/* Main Content */}
-            <main className="flex-1 p-6">
-              {renderContent()}
+            {/* Main Content con mejor spacing */}
+            <main className="flex-1 p-4 lg:p-6 overflow-auto">
+              <div className="max-w-none">
+                {renderContent()}
+              </div>
             </main>
           </SidebarInset>
         </div>
