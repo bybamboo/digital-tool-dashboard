@@ -31,37 +31,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
   };
 
   return (
-  <div className="w-full space-y-4 sm:border sm:rounded-lg sm:bg-white sm:overflow-x-auto">
-    {/* Mobile view: cards */}
-    <div className="space-y-4 block sm:hidden">
-      {tools.map((tool) => (
-        <div key={tool.id} className="border rounded-lg p-4 bg-white shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-semibold">{tool.name}</h3>
-            <Button variant="ghost" size="sm" onClick={() => onToggleFavorite(tool.id)}>
-              <Star className={`h-4 w-4 ${tool.is_favorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
-            </Button>
-          </div>
-          <p className="text-sm text-gray-600 mb-1"><strong>Category:</strong> {tool.category}</p>
-          <div className="flex flex-wrap gap-1 mb-2">
-            {tool.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">{tag}</Badge>
-            ))}
-          </div>
-          <p className="text-sm text-gray-700 mb-2">{tool.description}</p>
-          <div className="flex gap-2">
-            <Button size="sm" onClick={() => onEdit(tool)}>Edit</Button>
-            <Button size="sm" variant="outline" onClick={() => onDelete(tool.id)}>Delete</Button>
-            <Button size="sm" variant="ghost" onClick={() => handleExternalLink(tool.url)}>
-              <ExternalLink className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    {/* Desktop view: original table */}
-    <div className="hidden sm:block">
+    <div className="border rounded-lg bg-white">
       <Table>
         <TableHeader>
           <TableRow>
@@ -77,26 +47,75 @@ const ToolTable: React.FC<ToolTableProps> = ({
           {tools.map((tool) => (
             <TableRow key={tool.id} className="hover:bg-gray-50">
               <TableCell>
-                <Button variant="ghost" size="sm" onClick={() => onToggleFavorite(tool.id)}>
-                  <Star className={`h-4 w-4 ${tool.is_favorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onToggleFavorite(tool.id)}
+                >
+                  <Star 
+                    className={`h-4 w-4 ${tool.is_favorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} 
+                  />
                 </Button>
               </TableCell>
-              <TableCell>{tool.name}</TableCell>
-              <TableCell>{tool.category}</TableCell>
-              <TableCell>
-                <div className="flex flex-wrap gap-1">
-                  {tool.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">{tag}</Badge>
-                  ))}
+              
+              <TableCell className="font-medium">
+                <div className="flex items-center gap-2">
+                  {tool.name}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleExternalLink(tool.website_url)}
+                    className="text-blue-600 hover:text-blue-700 p-0 h-auto"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                  </Button>
                 </div>
               </TableCell>
-              <TableCell>{tool.description}</TableCell>
+              
               <TableCell>
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={() => onEdit(tool)}>Edit</Button>
-                  <Button size="sm" variant="outline" onClick={() => onDelete(tool.id)}>Delete</Button>
-                  <Button size="sm" variant="ghost" onClick={() => handleExternalLink(tool.url)}>
-                    <ExternalLink className="h-4 w-4" />
+                <Badge variant="secondary" className="text-xs">
+                  {tool.category}
+                </Badge>
+              </TableCell>
+              
+              <TableCell>
+                <div className="flex flex-wrap gap-1">
+                  {tool.tags.slice(0, 2).map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
+                  {tool.tags.length > 2 && (
+                    <Badge variant="outline" className="text-xs">
+                      +{tool.tags.length - 2}
+                    </Badge>
+                  )}
+                </div>
+              </TableCell>
+              
+              <TableCell className="max-w-[300px]">
+                <p className="text-sm text-gray-600 truncate">
+                  {tool.description}
+                </p>
+              </TableCell>
+              
+              <TableCell>
+                <div className="flex gap-1">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onEdit(tool)}
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    <Edit className="h-3 w-3" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onDelete(tool.id)}
+                    className="text-red-600 hover:text-red-700"
+                  >
+                    <Trash2 className="h-3 w-3" />
                   </Button>
                 </div>
               </TableCell>
@@ -105,7 +124,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
         </TableBody>
       </Table>
     </div>
-  </div>
-);
+  );
+};
 
 export default ToolTable;
