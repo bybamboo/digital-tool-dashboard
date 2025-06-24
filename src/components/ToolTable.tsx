@@ -66,7 +66,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => handleExternalLink(tool.website_url)}
-                    className="text-blue-600 hover:text-blue-700 p-0 h-auto flex-shrink-0"
+                    className="text-blue-600 hover:text-blue-700 p-0 h-auto flex-shrink-0 hover:bg-transparent"
                   >
                     <ExternalLink className="h-3 w-3" />
                   </Button>
@@ -88,7 +88,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
               <TableCell className="hidden md:table-cell">
                 <div className="flex flex-wrap gap-1">
                   {tool.tags.slice(0, 2).map((tag) => (
-                    <Badge key={tag} variant="outline" className="text-xs rounded-md">
+                    <Badge key={tag} variant="outline" className="text-xs rounded-md bg-white text-gray-800 border border-gray-300">
                       {tag}
                     </Badge>
                   ))}
@@ -120,7 +120,7 @@ const ToolTable: React.FC<ToolTableProps> = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => onDelete(tool.id)}
-                    className="text-red-600 hover:text-red-700 p-1 h-auto"
+                    className="text-red-600 hover:text-red-700 p-1 h-auto hover:bg-transparent"
                   >
                     <Trash2 className="h-3 w-3 text-red-600 hover:text-red-700 transition-colors hover:bg-transparent" />
                   </Button>
