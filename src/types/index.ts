@@ -1,4 +1,3 @@
-
 export interface Tool {
   id: string;
   name: string;
@@ -26,7 +25,7 @@ export interface Tag {
   created_at: string;
 }
 
-export type ViewMode = 'grid' | 'table';
+export type ViewMode = 'grid' | 'table' | 'category';
 
 export interface FilterState {
   search: string;
