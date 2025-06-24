@@ -8,8 +8,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
-  const [email, setEmail] = useState('soy@sandrabamboo.com');
-  const [password, setPassword] = useState('changeme');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { signIn, user } = useAuth();
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ const Auth = () => {
               className="w-full rounded-lg" 
               disabled={loading}
             >
-              {loading ? 'Iniciando...' : 'Iniciar Sesión'}
+              {loading ? 'Iniciando...' : 'Iniciar sesión'}
             </Button>
           </form>
         </CardContent>
