@@ -73,15 +73,20 @@ const ToolCard: React.FC<ToolCardProps> = ({
         )}
         
         <div className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleExternalLink}
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
-          >
-            <ExternalLink className="h-3 w-3" />
-            Visit
-          </Button>
+<Button
+  variant="ghost"
+  size="sm"
+  onClick={handleExternalLink}
+  className="
+    flex items-center gap-1 text-xs
+    text-blue-600 hover:text-blue-700
+    dark:text-blue-400 dark:hover:text-blue-300
+    p-0 h-auto
+  "
+>
+  <ExternalLink className="w-3 h-3" />
+  Ver web
+</Button>
           
           <div className="flex gap-1">
             <Button
