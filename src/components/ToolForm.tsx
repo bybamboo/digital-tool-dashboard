@@ -91,7 +91,7 @@ const ToolForm: React.FC<ToolFormProps> = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl mx-4 sm:mx-auto">
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-xl">
-            {tool ? 'Editar Herramienta' : 'Agregar Nueva Herramienta'}
+            {tool ? 'Editar herramienta' : 'Agregar nueva herramienta'}
           </DialogTitle>
         </DialogHeader>
 
@@ -139,7 +139,7 @@ const ToolForm: React.FC<ToolFormProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="website_url" className="text-sm font-medium">URL del Sitio Web *</Label>
+            <Label htmlFor="website_url" className="text-sm font-medium">Web *</Label>
             <Input
               id="website_url"
               type="url"
