@@ -40,7 +40,13 @@ const Index = () => {
     tags: [],
     showFavoritesOnly: false,
   });
-  const [sortBy, setSortBy] = useState<'recent' | 'az' | 'za'>('recent');
+  const [sortBy, setSortBy] = useState<'recent' | 'az' | 'za'>(() => {
+  return (localStorage.getItem('sortBy') as 'recent' | 'az' | 'za') || 'recent';
+});
+
+  useEffect(() => {
+  localStorage.setItem('sortBy', sortBy);
+}, [sortBy]);
 
   useEffect(() => {
     if (!authLoading && !user) {
