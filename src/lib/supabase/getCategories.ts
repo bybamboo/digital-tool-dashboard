@@ -1,12 +1,14 @@
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/integrations/supabase/client';
 
-export async function getCategories() {
+export const getCategories = async () => {
   const { data, error } = await supabase
     .from('categories')
-    .select('id, name, icon, color');
+    .select('*');
+
   if (error) {
-    console.error('Error cargando categorías', error);
+    console.error('Error al obtener categorías:', error);
     return [];
   }
+
   return data;
-}
+};
