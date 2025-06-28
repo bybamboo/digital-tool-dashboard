@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Star, ExternalLink, Edit, Trash2 } from 'lucide-react';
-import { Tool, Category } from '@/types';
+import { Star, ExternalLink, Edit, Trash2, FolderOpen } from 'lucide-react';
+import { Tool } from '@/types';
 import { getLucideIcon } from '@/lib/icons';
 
 interface CategoryViewProps {
@@ -11,7 +11,7 @@ interface CategoryViewProps {
   onEdit: (tool: Tool) => void;
   onDelete: (id: string) => void;
   onToggleFavorite: (id: string) => void;
-  categoryInfo: Record<string, Category>;
+  categoryMeta: Record<string, { icon: string; color?: string }>;
 }
 
 const CategoryView: React.FC<CategoryViewProps> = ({
@@ -19,13 +19,12 @@ const CategoryView: React.FC<CategoryViewProps> = ({
   onEdit,
   onDelete,
   onToggleFavorite,
-  categoryInfo,
+  categoryMeta,
 }) => {
   const handleExternalLink = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  // Agrupar herramientas por categoría
   const toolsByCategory = tools.reduce((acc, tool) => {
     const category = tool.category || 'Sin categoría';
     if (!acc[category]) {
@@ -40,14 +39,14 @@ const CategoryView: React.FC<CategoryViewProps> = ({
   return (
     <div className="space-y-8">
       {categories.map((category) => {
-        const categoryData = categoryInfo[category];
-        const Icon = getLucideIcon(categoryData?.icon || 'FolderOpen');
-        const colorClass = categoryData?.color || 'text-muted-foreground';
+        const meta = categoryMeta[category] || { icon: 'FolderOpen', color: undefined };
+        const Icon = getLucideIcon(meta.icon) || FolderOpen;
+        const iconColor = meta.color || 'var(--muted-foreground)';
 
         return (
           <div key={category}>
             <div className="flex items-center gap-3 mb-4">
-              <Icon className={`h-5 w-5 ${colorClass}`} />
+              <Icon className="h-5 w-5" style={{ color: iconColor }} />
               <h2 className="text-xl font-semibold">{category}</h2>
               <Badge variant="secondary" className="rounded-lg">
                 {toolsByCategory[category].length}
