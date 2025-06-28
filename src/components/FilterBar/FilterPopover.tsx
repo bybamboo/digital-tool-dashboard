@@ -53,7 +53,7 @@ const FilterPopover: React.FC<FilterPopoverProps> = ({
           <span className="hidden sm:inline ml-2">Filtros</span>
 
           {hasActiveFilters && (
-            <Badge variant="secondary" className="ml-2 h-5 w-5 p-0 text-xs">
+            <Badge variant="secondary" className="ml-2 h-5 w-5 p-0 text-xs flex items-center justify-center">
               {(filters.category ? 1 : 0) + filters.tags.length + (filters.showFavoritesOnly ? 1 : 0)}
             </Badge>
           )}
