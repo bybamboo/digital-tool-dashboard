@@ -57,7 +57,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
   return (
     <div className="flex flex-col gap-3">
       {/* Barra principal compacta */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
         <SearchInput
           value={filters.search}
           onChange={(value) => onFiltersChange({ ...filters, search: value })}
