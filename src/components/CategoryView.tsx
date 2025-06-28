@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -13,11 +12,11 @@ interface CategoryViewProps {
   onToggleFavorite: (id: string) => void;
 }
 
-const CategoryView: React.FC<CategoryViewProps> = ({ 
-  tools, 
-  onEdit, 
-  onDelete, 
-  onToggleFavorite 
+const CategoryView: React.FC<CategoryViewProps> = ({
+  tools,
+  onEdit,
+  onDelete,
+  onToggleFavorite,
 }) => {
   const handleExternalLink = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -46,10 +45,13 @@ const CategoryView: React.FC<CategoryViewProps> = ({
               {toolsByCategory[category].length}
             </Badge>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {toolsByCategory[category].map((tool) => (
-              <Card key={tool.id} className="group hover:shadow-md transition-all duration-200 rounded-xl border-border/40">
+              <Card
+                key={tool.id}
+                className="group hover:shadow-md transition-all duration-200 rounded-xl border-border/40"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
@@ -71,37 +73,36 @@ const CategoryView: React.FC<CategoryViewProps> = ({
                           onClick={() => onToggleFavorite(tool.id)}
                           className="p-0 h-auto"
                         >
-                          <Star 
+                          <Star
                             className={`h-4 w-4 ${
-                              tool.is_favorite 
-                                ? 'fill-yellow-400 text-yellow-400' 
+                              tool.is_favorite
+                                ? 'fill-yellow-400 text-yellow-400'
                                 : 'text-gray-400 group-hover:text-gray-600'
-                            }`} 
+                            }`}
                           />
                         </Button>
                       </div>
                     </div>
                   </div>
                 </CardHeader>
-                
+
                 <CardContent className="pt-0">
                   <p className="text-sm text-muted-foreground mb-3">
                     {tool.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-1 mb-3">
-                    {tool.tags.slice(0, 3).map((tag) => (
-                      <Badge key={tag} variant="outline" className="text-xs rounded-lg">
+                    {tool.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="text-xs rounded-lg"
+                      >
                         {tag}
                       </Badge>
                     ))}
-                    {tool.tags.length > 3 && (
-                      <Badge variant="outline" className="text-xs rounded-lg">
-                        +{tool.tags.length - 10}
-                      </Badge>
-                    )}
                   </div>
-                  
+
                   <div className="flex justify-end gap-1">
                     <Button
                       variant="ghost"
