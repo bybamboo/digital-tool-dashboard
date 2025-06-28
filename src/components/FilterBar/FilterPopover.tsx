@@ -37,18 +37,19 @@ const FilterPopover: React.FC<FilterPopoverProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button 
-          variant="outline" 
-          className={`rounded-xl ${hasActiveFilters ? 'bg-primary text-primary-foreground' : ''}`}
-        >
-          <Filter className="h-4 w-4" />
-          Filtros
-          {hasActiveFilters && (
-            <Badge variant="secondary" className="ml-2 h-5 w-5 p-0 text-xs">
-              {(filters.category ? 1 : 0) + filters.tags.length + (filters.showFavoritesOnly ? 1 : 0)}
-            </Badge>
-          )}
-        </Button>
+<Button 
+  variant="outline" 
+  className={`rounded-xl px-2 sm:px-4 ${hasActiveFilters ? 'bg-primary text-primary-foreground' : ''}`}
+>
+  <Filter className="h-4 w-4" />
+  <span className="hidden sm:inline ml-2">Filtros</span>
+
+  {hasActiveFilters && (
+    <Badge variant="secondary" className="ml-2 h-5 w-5 p-0 text-xs">
+      {(filters.category ? 1 : 0) + filters.tags.length + (filters.showFavoritesOnly ? 1 : 0)}
+    </Badge>
+  )}
+</Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-4 bg-popover" align="start">
         <div className="space-y-4">
