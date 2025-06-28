@@ -57,8 +57,8 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Barra principal */}
-      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2">
+      {/* Todos los elementos en una línea con flex-wrap si no caben */}
+      <div className="flex flex-row flex-wrap items-center gap-2 w-full">
         <SearchInput
           value={filters.search}
           onChange={(value) => onFiltersChange({ ...filters, search: value })}
@@ -68,7 +68,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           value={sortBy}
           onValueChange={(value) => onSortByChange(value as 'recent' | 'az' | 'za')}
         >
-          <SelectTrigger className="rounded-xl text-sm sm:w-[160px]">
+          <SelectTrigger className="h-9 px-3 rounded-xl text-sm w-[120px] sm:w-[160px]">
             <SelectValue placeholder="Ordenar por" />
           </SelectTrigger>
           <SelectContent>
@@ -92,7 +92,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           onViewModeChange={onViewModeChange}
         />
 
-        <div className="text-sm text-muted-foreground whitespace-nowrap sm:ml-auto">
+        <div className="text-sm text-muted-foreground whitespace-nowrap ml-auto">
           {totalCount} herramienta{totalCount !== 1 ? 's' : ''}
         </div>
       </div>
