@@ -10,14 +10,28 @@ interface SearchInputProps {
 
 const SearchInput: React.FC<SearchInputProps> = ({ value, onChange }) => {
   return (
-    <div className="relative flex-1 min-w-[200px] max-w-md">
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+    <div className="relative w-full sm:w-auto">
+      {/* Input visible solo en sm+ */}
       <Input
+        type="text"
         placeholder="Buscar herramientas..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="pl-10 rounded-xl"
+        className="hidden sm:block w-full sm:w-[220px]"
       />
+
+      {/* Botón solo visible en móvil */}
+      <button
+        className="sm:hidden flex items-center justify-center w-9 h-9 rounded-md border border-input bg-background"
+        onClick={() => {
+          const query = prompt('Buscar herramienta');
+          if (query !== null) {
+            onChange(query);
+          }
+        }}
+      >
+        <Filter className="h-4 w-4" />
+      </button>
     </div>
   );
 };
