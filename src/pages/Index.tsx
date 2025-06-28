@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { LogOut, FolderOpen } from 'lucide-react';
@@ -11,9 +10,10 @@ import ToolForm from '@/components/ToolForm';
 import FilterBar from '@/components/FilterBar';
 import { useSupabaseTools } from '@/hooks/useSupabaseTools';
 import { useAuth } from '@/contexts/AuthContext';
-import { useTheme } from '@/contexts/ThemeContext';
 import { Tool, ViewMode, FilterState } from '@/types';
 import { useNavigate } from 'react-router-dom';
+import { getCategories } from '@/lib/supabase/getCategories'; // <--- nuevo
+import { getLucideIcon } from '@/lib/icons'; // <--- nuevo
 
 const Index = () => {
   const { user, loading: authLoading, signOut } = useAuth();
@@ -31,6 +31,7 @@ const Index = () => {
     filterTools,
   } = useSupabaseTools();
 
+  const [categoryMeta, setCategoryMeta] = useState<Record<string, { icon: string; color?: string }>>({}); // <--- nuevo
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTool, setEditingTool] = useState<Tool | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -41,12 +42,12 @@ const Index = () => {
     showFavoritesOnly: false,
   });
   const [sortBy, setSortBy] = useState<'recent' | 'az' | 'za'>(() => {
-  return (localStorage.getItem('sortBy') as 'recent' | 'az' | 'za') || 'recent';
-});
+    return (localStorage.getItem('sortBy') as 'recent' | 'az' | 'za') || 'recent';
+  });
 
   useEffect(() => {
-  localStorage.setItem('sortBy', sortBy);
-}, [sortBy]);
+    localStorage.setItem('sortBy', sortBy);
+  }, [sortBy]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -54,19 +55,31 @@ const Index = () => {
     }
   }, [user, authLoading, navigate]);
 
+  // 🚀 Traer los metadatos de categorías (paso 3)
+  useEffect(() => {
+    const fetchCategoryMeta = async () => {
+      const categoriesFromDb = await getCategories();
+      const map: Record<string, { icon: string; color?: string }> = {};
+      categoriesFromDb.forEach(cat => {
+        map[cat.name] = { icon: cat.icon || 'FolderOpen', color: cat.color || undefined };
+      });
+      setCategoryMeta(map);
+    };
+    fetchCategoryMeta();
+  }, []);
+
   const filteredTools = filterTools(filters);
   const sortedTools = useMemo(() => {
-  return [...filteredTools].sort((a, b) => {
-    if (sortBy === 'az') return a.name.localeCompare(b.name);
-    if (sortBy === 'za') return b.name.localeCompare(a.name);
-    if (sortBy === 'recent') {
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-    }
-    return 0;
-  });
-}, [filteredTools, sortBy]);
+    return [...filteredTools].sort((a, b) => {
+      if (sortBy === 'az') return a.name.localeCompare(b.name);
+      if (sortBy === 'za') return b.name.localeCompare(a.name);
+      if (sortBy === 'recent') {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }
+      return 0;
+    });
+  }, [filteredTools, sortBy]);
 
-  // Calcular estadísticas para la barra lateral
   const toolCounts = useMemo(() => {
     const byCategory: Record<string, number> = {};
     const byTag: Record<string, number> = {};
@@ -74,10 +87,8 @@ const Index = () => {
 
     tools.forEach(tool => {
       if (tool.is_favorite) favorites++;
-      
       const category = tool.category || 'Sin categoría';
       byCategory[category] = (byCategory[category] || 0) + 1;
-      
       tool.tags.forEach(tag => {
         byTag[tag] = (byTag[tag] || 0) + 1;
       });
@@ -122,21 +133,6 @@ const Index = () => {
     navigate('/auth');
   };
 
-  if (authLoading || loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Cargando tus herramientas...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
-
   const renderContent = () => {
     if (filteredTools.length === 0) {
       return (
@@ -150,8 +146,7 @@ const Index = () => {
           <p className="text-muted-foreground mb-6 max-w-md mx-auto">
             {tools.length === 0 
               ? 'Comienza agregando tu primera herramienta digital a la colección.'
-              : 'Intenta ajustar tus criterios de búsqueda o filtro para encontrar lo que buscas.'
-            }
+              : 'Intenta ajustar tus criterios de búsqueda o filtro para encontrar lo que buscas.'}
           </p>
           {tools.length === 0 && (
             <Button onClick={handleAddTool} className="rounded-xl">
@@ -170,6 +165,7 @@ const Index = () => {
             onEdit={handleEditTool}
             onDelete={handleDeleteTool}
             onToggleFavorite={toggleFavorite}
+            categoryMeta={categoryMeta} // <--- se pasa aquí
           />
         );
       case 'table':
@@ -216,11 +212,9 @@ const Index = () => {
           />
           
           <SidebarInset className="flex-1 flex flex-col min-w-0">
-            {/* Header con mejor responsive */}
             <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 sticky top-0 z-40 shrink-0">
               <div className="flex h-auto min-h-[56px] items-center gap-4 p-4 lg:px-6">
                 <SidebarTrigger className="rounded-xl shrink-0" />
-                
                 <div className="flex-1 min-w-0">
                   <FilterBar
                     filters={filters}
@@ -234,7 +228,6 @@ const Index = () => {
                     onSortByChange={setSortBy}
                   />
                 </div>
-                
                 <Button
                   variant="ghost"
                   onClick={handleSignOut}
@@ -246,11 +239,8 @@ const Index = () => {
               </div>
             </header>
 
-            {/* Main Content con mejor spacing */}
             <main className="flex-1 p-4 lg:p-6 overflow-auto">
-              <div className="max-w-none">
-                {renderContent()}
-              </div>
+              <div className="max-w-none">{renderContent()}</div>
             </main>
           </SidebarInset>
         </div>
