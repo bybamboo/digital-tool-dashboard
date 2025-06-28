@@ -49,7 +49,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
       </CardHeader>
       
       <CardContent className="pt-0">
-        <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+        <p className="text-sm text-gray-600 mb-4">
           {tool.description}
         </p>
         
