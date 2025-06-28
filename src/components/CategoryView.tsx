@@ -85,7 +85,7 @@ const CategoryView: React.FC<CategoryViewProps> = ({
                 </CardHeader>
                 
                 <CardContent className="pt-0">
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                  <p className="text-sm text-muted-foreground mb-3">
                     {tool.description}
                   </p>
                   
@@ -97,7 +97,7 @@ const CategoryView: React.FC<CategoryViewProps> = ({
                     ))}
                     {tool.tags.length > 3 && (
                       <Badge variant="outline" className="text-xs rounded-lg">
-                        +{tool.tags.length - 3}
+                        +{tool.tags.length - 10}
                       </Badge>
                     )}
                   </div>
