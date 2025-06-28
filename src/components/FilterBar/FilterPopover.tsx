@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Filter, Star, X } from 'lucide-react';
+import { Filter, Star } from 'lucide-react';
 import { FilterState } from '@/types';
 
 interface FilterPopoverProps {
@@ -23,6 +23,8 @@ interface FilterPopoverProps {
   allTags: string[];
   hasActiveFilters: boolean;
   onClearFilters: () => void;
+  sortBy: 'recent' | 'az' | 'za';
+  onSortByChange: (value: 'recent' | 'az' | 'za') => void;
 }
 
 const FilterPopover: React.FC<FilterPopoverProps> = ({
@@ -32,6 +34,8 @@ const FilterPopover: React.FC<FilterPopoverProps> = ({
   allTags,
   hasActiveFilters,
   onClearFilters,
+  sortBy,
+  onSortByChange,
 }) => {
   const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -53,20 +57,51 @@ const FilterPopover: React.FC<FilterPopoverProps> = ({
           <span className="hidden sm:inline ml-2">Filtros</span>
 
           {hasActiveFilters && (
-            <Badge variant="secondary" className="ml-2 h-5 w-5 p-0 text-xs flex items-center justify-center">
-              {(filters.category ? 1 : 0) + filters.tags.length + (filters.showFavoritesOnly ? 1 : 0)}
+            <Badge
+              variant="secondary"
+              className="ml-2 h-5 w-5 p-0 text-xs flex items-center justify-center"
+            >
+              {(filters.category ? 1 : 0) +
+                filters.tags.length +
+                (filters.showFavoritesOnly ? 1 : 0)}
             </Badge>
           )}
         </Button>
       </PopoverTrigger>
+
       <PopoverContent className="w-80 p-4 bg-popover" align="start">
         <div className="space-y-4">
+          {/* Ordenar por */}
+          <div>
+            <label className="text-sm font-medium mb-2 block text-popover-foreground">Ordenar por</label>
+            <Select
+              value={sortBy}
+              onValueChange={(value) => {
+                onSortByChange(value as 'recent' | 'az' | 'za');
+                closePopover();
+              }}
+            >
+              <SelectTrigger className="rounded-xl">
+                <SelectValue placeholder="Ordenar por" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover">
+                <SelectItem value="recent">Más recientes</SelectItem>
+                <SelectItem value="az">A-Z</SelectItem>
+                <SelectItem value="za">Z-A</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Categoría */}
           <div>
             <label className="text-sm font-medium mb-2 block text-popover-foreground">Categoría</label>
             <Select
               value={filters.category || "all"}
               onValueChange={(value) => {
-                onFiltersChange({ ...filters, category: value === "all" ? "" : value });
+                onFiltersChange({
+                  ...filters,
+                  category: value === "all" ? "" : value,
+                });
                 closePopover();
               }}
             >
@@ -84,13 +119,17 @@ const FilterPopover: React.FC<FilterPopoverProps> = ({
             </Select>
           </div>
 
+          {/* Etiquetas */}
           <div>
             <label className="text-sm font-medium mb-2 block text-popover-foreground">Etiquetas</label>
             <Select
               value=""
               onValueChange={(value) => {
                 if (value && !filters.tags.includes(value)) {
-                  onFiltersChange({ ...filters, tags: [...filters.tags, value] });
+                  onFiltersChange({
+                    ...filters,
+                    tags: [...filters.tags, value],
+                  });
                   closePopover();
                 }
               }}
@@ -100,7 +139,7 @@ const FilterPopover: React.FC<FilterPopoverProps> = ({
               </SelectTrigger>
               <SelectContent className="bg-popover">
                 {allTags
-                  .filter(tag => !filters.tags.includes(tag))
+                  .filter((tag) => !filters.tags.includes(tag))
                   .map((tag) => (
                     <SelectItem key={tag} value={tag}>
                       {tag}
@@ -110,11 +149,15 @@ const FilterPopover: React.FC<FilterPopoverProps> = ({
             </Select>
           </div>
 
+          {/* Favoritos y limpiar */}
           <div className="flex items-center justify-between">
             <Button
               variant={filters.showFavoritesOnly ? "default" : "outline"}
               onClick={() => {
-                onFiltersChange({ ...filters, showFavoritesOnly: !filters.showFavoritesOnly });
+                onFiltersChange({
+                  ...filters,
+                  showFavoritesOnly: !filters.showFavoritesOnly,
+                });
                 closePopover();
               }}
               className="flex items-center gap-2 rounded-xl"
