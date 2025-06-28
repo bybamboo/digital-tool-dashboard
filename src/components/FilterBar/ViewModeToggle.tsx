@@ -9,20 +9,23 @@ interface ViewModeToggleProps {
   onViewModeChange: (mode: ViewMode) => void;
 }
 
-const ViewModeToggle: React.FC<ViewModeToggleProps> = ({ viewMode, onViewModeChange }) => {
+const ViewModeToggle: React.FC<ViewModeToggleProps> = ({
+  viewMode,
+  onViewModeChange,
+}) => {
   return (
-    <div className="flex border rounded-xl">
+    <div className="flex h-9 rounded-xl overflow-hidden border border-border bg-background">
       <Button
         variant={viewMode === 'grid' ? 'default' : 'ghost'}
-        size="sm"
+        size="icon"
         onClick={() => onViewModeChange('grid')}
-        className="rounded-l-xl rounded-r-none"
+        className="rounded-none"
       >
         <Grid3X3 className="h-4 w-4" />
       </Button>
       <Button
         variant={viewMode === 'category' ? 'default' : 'ghost'}
-        size="sm"
+        size="icon"
         onClick={() => onViewModeChange('category')}
         className="rounded-none"
       >
@@ -30,9 +33,9 @@ const ViewModeToggle: React.FC<ViewModeToggleProps> = ({ viewMode, onViewModeCha
       </Button>
       <Button
         variant={viewMode === 'table' ? 'default' : 'ghost'}
-        size="sm"
+        size="icon"
         onClick={() => onViewModeChange('table')}
-        className="rounded-r-xl rounded-l-none"
+        className="rounded-none"
       >
         <Table2 className="h-4 w-4" />
       </Button>
