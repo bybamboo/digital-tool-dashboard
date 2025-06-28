@@ -1,17 +1,9 @@
-
 import React from 'react';
 import { FilterState, ViewMode } from '@/types';
 import SearchInput from './FilterBar/SearchInput';
 import FilterPopover from './FilterBar/FilterPopover';
 import ViewModeToggle from './FilterBar/ViewModeToggle';
 import ActiveTagsList from './FilterBar/ActiveTagsList';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/ui/select';
 
 interface FilterBarProps {
   filters: FilterState;
@@ -64,20 +56,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
           onChange={(value) => onFiltersChange({ ...filters, search: value })}
         />
 
-        <Select
-          value={sortBy}
-          onValueChange={(value) => onSortByChange(value as 'recent' | 'az' | 'za')}
-        >
-          <SelectTrigger className="h-9 px-3 rounded-xl text-sm w-[120px] sm:w-[160px]">
-            <SelectValue placeholder="Ordenar por" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="recent">Más recientes</SelectItem>
-            <SelectItem value="az">A-Z</SelectItem>
-            <SelectItem value="za">Z-A</SelectItem>
-          </SelectContent>
-        </Select>
-
         <FilterPopover
           filters={filters}
           onFiltersChange={onFiltersChange}
@@ -85,6 +63,8 @@ const FilterBar: React.FC<FilterBarProps> = ({
           allTags={allTags}
           hasActiveFilters={hasActiveFilters}
           onClearFilters={clearFilters}
+          sortBy={sortBy}
+          onSortByChange={onSortByChange}
         />
 
         <ViewModeToggle
