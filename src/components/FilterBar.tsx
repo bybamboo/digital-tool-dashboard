@@ -72,7 +72,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
           onViewModeChange={onViewModeChange}
         />
 
-        <div className="text-sm text-muted-foreground whitespace-nowrap ml-auto">
+        <div className="hidden sm:block text-sm text-muted-foreground whitespace-nowrap ml-auto">
           {totalCount} herramienta{totalCount !== 1 ? 's' : ''}
         </div>
       </div>
