@@ -41,6 +41,7 @@ const CategoryView: React.FC<CategoryViewProps> = ({
       {categories.map((category) => {
         const meta = categoryMeta[category] || { icon: 'FolderOpen', color: undefined };
         const Icon = getLucideIcon(meta.icon) || FolderOpen;
+      console.log('Icono para', category, ':', meta.icon, '->', Icon?.name);
         const iconColor = meta.color || 'var(--muted-foreground)';
 
         return (
