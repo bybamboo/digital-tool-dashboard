@@ -30,7 +30,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ value, onChange }) => {
           }
         }}
       >
-        <Filter className="h-4 w-4" />
+        <Search className="h-4 w-4" />
       </button>
     </div>
   );
