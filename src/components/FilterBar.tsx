@@ -57,45 +57,53 @@ const FilterBar: React.FC<FilterBarProps> = ({
   return (
     <div className="flex flex-col gap-3">
       {/* Barra principal compacta */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:flex-wrap gap-2 w-full">
-        <SearchInput
-          value={filters.search}
-          onChange={(value) => onFiltersChange({ ...filters, search: value })}
-        />
+<div className="w-full grid grid-cols-1 sm:flex sm:flex-wrap sm:items-center gap-2">
+  <div className="w-full sm:w-auto">
+    <SearchInput
+      value={filters.search}
+      onChange={(value) => onFiltersChange({ ...filters, search: value })}
+    />
+  </div>
 
-        <Select
-  value={sortBy}
-  onValueChange={(value) => onSortByChange(value as 'recent' | 'az' | 'za')}
->
-  <SelectTrigger className="w-[160px] rounded-xl text-sm">
-    <SelectValue placeholder="Ordenar por" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="recent">Más recientes</SelectItem>
-    <SelectItem value="az">A-Z</SelectItem>
-    <SelectItem value="za">Z-A</SelectItem>
-  </SelectContent>
-</Select>
+  <div className="w-full sm:w-auto">
+    <Select
+      value={sortBy}
+      onValueChange={(value) => onSortByChange(value as 'recent' | 'az' | 'za')}
+    >
+      <SelectTrigger className="w-full sm:w-[160px] rounded-xl text-sm">
+        <SelectValue placeholder="Ordenar por" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="recent">Más recientes</SelectItem>
+        <SelectItem value="az">A-Z</SelectItem>
+        <SelectItem value="za">Z-A</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
 
-        <FilterPopover
-          filters={filters}
-          onFiltersChange={onFiltersChange}
-          categories={categories}
-          allTags={allTags}
-          hasActiveFilters={hasActiveFilters}
-          onClearFilters={clearFilters}
-        />
+  <div className="w-full sm:w-auto">
+    <FilterPopover
+      filters={filters}
+      onFiltersChange={onFiltersChange}
+      categories={categories}
+      allTags={allTags}
+      hasActiveFilters={hasActiveFilters}
+      onClearFilters={clearFilters}
+    />
+  </div>
 
-        <ViewModeToggle
-          viewMode={viewMode}
-          onViewModeChange={onViewModeChange}
-        />
+  <div className="w-full sm:w-auto">
+    <ViewModeToggle
+      viewMode={viewMode}
+      onViewModeChange={onViewModeChange}
+    />
+  </div>
 
-        {/* Contador de resultados */}
-        <div className="text-sm text-muted-foreground whitespace-nowrap">
-          {totalCount} herramienta{totalCount !== 1 ? 's' : ''}
-        </div>
-      </div>
+  <div className="text-sm text-muted-foreground whitespace-nowrap ml-auto">
+    {totalCount} herramienta{totalCount !== 1 ? 's' : ''}
+  </div>
+</div>
+
 
       <ActiveTagsList
         tags={filters.tags}
