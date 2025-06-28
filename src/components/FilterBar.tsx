@@ -52,58 +52,50 @@ const FilterBar: React.FC<FilterBarProps> = ({
     });
   };
 
-  const hasActiveFilters = filters.search || filters.category || filters.tags.length > 0 || filters.showFavoritesOnly;
+  const hasActiveFilters =
+    filters.search || filters.category || filters.tags.length > 0 || filters.showFavoritesOnly;
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Barra principal compacta */}
-<div className="w-full grid grid-cols-1 sm:flex sm:flex-wrap sm:items-center gap-2">
-  <div className="w-full sm:w-auto">
-    <SearchInput
-      value={filters.search}
-      onChange={(value) => onFiltersChange({ ...filters, search: value })}
-    />
-  </div>
+      {/* Barra principal */}
+      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2">
+        <SearchInput
+          value={filters.search}
+          onChange={(value) => onFiltersChange({ ...filters, search: value })}
+        />
 
-  <div className="w-full sm:w-auto">
-    <Select
-      value={sortBy}
-      onValueChange={(value) => onSortByChange(value as 'recent' | 'az' | 'za')}
-    >
-      <SelectTrigger className="w-full sm:w-[160px] rounded-xl text-sm">
-        <SelectValue placeholder="Ordenar por" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="recent">Más recientes</SelectItem>
-        <SelectItem value="az">A-Z</SelectItem>
-        <SelectItem value="za">Z-A</SelectItem>
-      </SelectContent>
-    </Select>
-  </div>
+        <Select
+          value={sortBy}
+          onValueChange={(value) => onSortByChange(value as 'recent' | 'az' | 'za')}
+        >
+          <SelectTrigger className="rounded-xl text-sm sm:w-[160px]">
+            <SelectValue placeholder="Ordenar por" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="recent">Más recientes</SelectItem>
+            <SelectItem value="az">A-Z</SelectItem>
+            <SelectItem value="za">Z-A</SelectItem>
+          </SelectContent>
+        </Select>
 
-  <div className="w-full sm:w-auto">
-    <FilterPopover
-      filters={filters}
-      onFiltersChange={onFiltersChange}
-      categories={categories}
-      allTags={allTags}
-      hasActiveFilters={hasActiveFilters}
-      onClearFilters={clearFilters}
-    />
-  </div>
+        <FilterPopover
+          filters={filters}
+          onFiltersChange={onFiltersChange}
+          categories={categories}
+          allTags={allTags}
+          hasActiveFilters={hasActiveFilters}
+          onClearFilters={clearFilters}
+        />
 
-  <div className="w-full sm:w-auto">
-    <ViewModeToggle
-      viewMode={viewMode}
-      onViewModeChange={onViewModeChange}
-    />
-  </div>
+        <ViewModeToggle
+          viewMode={viewMode}
+          onViewModeChange={onViewModeChange}
+        />
 
-  <div className="text-sm text-muted-foreground whitespace-nowrap ml-auto">
-    {totalCount} herramienta{totalCount !== 1 ? 's' : ''}
-  </div>
-</div>
-
+        <div className="text-sm text-muted-foreground whitespace-nowrap sm:ml-auto">
+          {totalCount} herramienta{totalCount !== 1 ? 's' : ''}
+        </div>
+      </div>
 
       <ActiveTagsList
         tags={filters.tags}
