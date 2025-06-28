@@ -19,7 +19,7 @@ const ViewModeToggle: React.FC<ViewModeToggleProps> = ({
         variant={viewMode === 'grid' ? 'default' : 'ghost'}
         size="icon"
         onClick={() => onViewModeChange('grid')}
-        className="rounded-none"
+        className="rounded-none flex items-center justify-center"
       >
         <Grid3X3 className="h-4 w-4" />
       </Button>
@@ -27,7 +27,7 @@ const ViewModeToggle: React.FC<ViewModeToggleProps> = ({
         variant={viewMode === 'category' ? 'default' : 'ghost'}
         size="icon"
         onClick={() => onViewModeChange('category')}
-        className="rounded-none"
+        className="rounded-none flex items-center justify-center"
       >
         <Layers3 className="h-4 w-4" />
       </Button>
@@ -35,7 +35,7 @@ const ViewModeToggle: React.FC<ViewModeToggleProps> = ({
         variant={viewMode === 'table' ? 'default' : 'ghost'}
         size="icon"
         onClick={() => onViewModeChange('table')}
-        className="rounded-none"
+        className="rounded-none flex items-center justify-center"
       >
         <Table2 className="h-4 w-4" />
       </Button>
