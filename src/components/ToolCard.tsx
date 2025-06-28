@@ -60,7 +60,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
             </Badge>
           ))}
           {tool.tags.length > 3 && (
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-xs bg-muted text-foreground border border-border">
               +{tool.tags.length - 3}
             </Badge>
           )}
